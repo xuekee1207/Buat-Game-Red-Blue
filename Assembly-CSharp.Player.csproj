@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{A712C05F-DC26-4FC6-60AB-48591D40C93C}</ProjectGuid>
+    <ProjectGuid>{CD19BD26-E9EF-B1CD-F9C9-A0E96784BE40}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -56,9 +56,16 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\WaitExtension.cs" />
     <Compile Include="Assets\Scripts\CarController.cs" />
     <Compile Include="Assets\Assets Used\_Barking_Dog\Common Scripts\Turn_Move.cs" />
     <Compile Include="Assets\Assets Used\_Barking_Dog\Common Scripts\MouseLook.cs" />
+    <Compile Include="Assets\Scripts\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\PageLoader.cs" />
+    <Compile Include="Assets\Timer.cs" />
+    <Compile Include="Assets\BlueGoal.cs" />
+    <Compile Include="Assets\ScoreManager.cs" />
+    <Compile Include="Assets\RedGoal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
