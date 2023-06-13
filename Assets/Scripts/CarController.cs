@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class CarController : MonoBehaviour
 {
@@ -25,6 +21,22 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform frontLeftWheelTransform, frontRightWheelTransform;
     [SerializeField] private Transform rearLeftWheelTransform, rearRightWheelTransform;
 
+    // Boost settings
+    public float boostForce = 1000f;      // The force applied during the boost
+    public float boostDuration = 2f;      // The duration of the boost
+    public float boostCooldown = 5f;      // The cooldown period between boosts
+
+    private bool isBoosting = false;      // Indicates if the boost is currently active
+    private float boostTimer = 0f;        // Timer for tracking the boost duration
+    private float cooldownTimer = 0f;     // Timer for tracking the boost cooldown
+
+    private void Start()
+    {
+        _rb = GetComponent<Rigidbody>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
     private void FixedUpdate()
     {
         GetInput();
@@ -33,6 +45,29 @@ public class CarController : MonoBehaviour
         UpdateWheels();
         forwardSpeed = Vector3.Dot(_rb.velocity, transform.forward);
         forwardSpeed = (float)System.Math.Round(forwardSpeed, 2);
+
+        // Check for boost activation
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isBoosting && cooldownTimer <= 0f)
+        {
+            StartBoost();
+        }
+
+        // Update boost timer
+        if (isBoosting)
+        {
+            boostTimer -= Time.deltaTime;
+
+            if (boostTimer <= 0f)
+            {
+                EndBoost();
+            }
+        }
+
+        // Update boost cooldown
+        if (cooldownTimer > 0f)
+        {
+            cooldownTimer -= Time.deltaTime;
+        }
     }
 
     private void GetInput()
@@ -87,5 +122,30 @@ public class CarController : MonoBehaviour
         wheelTransform.position = pos;
     }
 
+    private void StartBoost()
+    {
+        isBoosting = true;
+        boostTimer = boostDuration;
+        ApplyBoostForce();
 
+        // TODO: Add visual/audio effects or any other actions for the boost start
+
+        Debug.Log("Boost activated!");
+    }
+
+    private void EndBoost()
+    {
+        isBoosting = false;
+        cooldownTimer = boostCooldown;
+
+        // TODO: Add visual/audio effects or any other actions for the boost end
+
+        Debug.Log("Boost ended. Cooldown started.");
+    }
+
+    private void ApplyBoostForce()
+    {
+        // Apply the boost force to the car
+        _rb.AddForce(transform.forward * boostForce, ForceMode.Impulse);
+    }
 }
